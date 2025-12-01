@@ -51,9 +51,9 @@ export function MainView() {
   return (
     <div className="main flex items-center justify-center flex-col gap-4 mt-5">
       <h1 className="text-3xl">Main Page</h1>
-      <span>page: </span>
+      <span>page: {currentPage}</span>
       <span>posts per page: {postPerPage}</span>
-      <span>total pages: </span>
+      <span>total pages: {totalPages}</span>
 
       <div className="input-group ">
         <div className="relative">
