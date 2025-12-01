@@ -10,3 +10,10 @@ export async function apiPostsGetAll(init?: RequestInit): Promise<IPost[]> {
     ...init
   })
 }
+
+export async function apiPostsById(params: {id: number | string}, init?: RequestInit): Promise<IPost> {
+   return fetchJson(`${BASE_PATH}/posts/${params.id}`, {
+        method: 'GET',
+        ...init
+    })
+}

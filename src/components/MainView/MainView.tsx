@@ -1,13 +1,12 @@
-import { useMemo } from "react";
 import { Post } from "../Post/Post.tsx";
 import type { IPost } from "../../types/IPost.ts";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, type ChangeEvent } from "react";
 import { apiPostsGetAll } from "../../api/postsApi.ts";
 
 export function MainView() {
-  const [allPosts, setAllPosts] = useState<IPost[] | []>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [inputText, setInputText] = useState<string>("");
+  const [allPosts, setAllPosts] = useState<IPost[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [inputText, setInputText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
   const postPerPage = 10;
@@ -48,6 +47,10 @@ export function MainView() {
     loadPosts();
   },[]);
 
+  useEffect(() => {
+  setCurrentPage(1);
+}, [inputText]);
+
   return (
     <div className="main flex items-center justify-center flex-col gap-4 mt-5">
       <h1 className="text-3xl">Main Page</h1>
@@ -58,7 +61,7 @@ export function MainView() {
       <div className="input-group ">
         <div className="relative">
           <input
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setInputText(e.target.value)
             }
             type="text"
@@ -79,28 +82,28 @@ export function MainView() {
         <nav aria-label="Page navigation example">
           <ul className="flex -space-x-px text-sm">
             <li>
-              <a
-                href="#"
+              <button
+                type="button"
                 onClick={(e) => {
                   e.preventDefault();
                   setCurrentPage(prev => Math.max(1, prev - 1));
                 }}
-                className="flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium transition-colors hover:bg-neutral-tertiary-medium hover:text-heading font-medium rounded-s-base text-sm px-3 h-9 focus:outline-none"
+                className="flex items-center justify-center cursor-pointer text-body bg-neutral-secondary-medium box-border border border-default-medium transition-colors hover:bg-neutral-tertiary-medium hover:text-heading font-medium rounded-s-base text-sm px-3 h-9 focus:outline-none"
               >
                 Previous
-              </a>
+              </button>
             </li>
 
             {Array.from({ length: totalPages }, (_, i) => (
             <li key={i}>
-              <a
-                href="#"
+              <button
+                type="button"
                 onClick={(e) => {
                   e.preventDefault();
                   setCurrentPage(i + 1);
                 }}
                 className={
-                  `flex items-center justify-center box-border border border-default-medium 
+                  `flex items-center justify-center box-border border cursor-pointer border-default-medium 
                   transition-colors font-medium text-sm w-9 h-9 focus:outline-none
                   ${
                     currentPage === i + 1
@@ -110,22 +113,22 @@ export function MainView() {
                 }
               >
                 {i + 1}
-              </a>
+              </button>
             </li>
           ))}
 
 
             <li>
-              <a
-                href="#"
+              <button
+                type="button"
                 onClick={(e) => {
                   e.preventDefault();
                   setCurrentPage(prev => Math.min(totalPages, prev + 1));
                 }}
-                className="flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium transition-colors hover:bg-neutral-tertiary-medium hover:text-heading font-medium rounded-e-base text-sm px-3 h-9 focus:outline-none"
+                className="flex items-center justify-center cursor-pointer text-body bg-neutral-secondary-medium box-border border border-default-medium transition-colors hover:bg-neutral-tertiary-medium hover:text-heading font-medium rounded-e-base text-sm px-3 h-9 focus:outline-none"
               >
                 Next
-              </a>
+              </button>
             </li>
           </ul>
         </nav>

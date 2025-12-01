@@ -1,13 +1,13 @@
 // import { useState } from 'react'
+import { Outlet } from "react-router-dom";
 import {Header} from "./components/Header/Header.tsx";
-import {MainView} from "./components/MainView/MainView.tsx";
 
 function App() {
 
   return (
     <div>
       <Header />
-      <MainView />
+      <Outlet />
     </div>
   )
 }
